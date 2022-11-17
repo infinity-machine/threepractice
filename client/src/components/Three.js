@@ -1,12 +1,31 @@
-import React from 'react'
-import { Sky, PerspectiveCamera } from '@react-three/drei'
+import React, { useEffect, useRef } from 'react'
+import { Sky, OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import angleToRadians from '../utils/angle';
+import { useFrame } from '@react-three/fiber';
 const Three = () => {
+    const orbitControlsRef = useRef(null);
+    useFrame((state) => {
+        if(!!orbitControlsRef.current) {
+            const { x, y } = state.mouse;
+            console.log(y * angleToRadians(90 - 30));
+            orbitControlsRef.current.setAzimuthalAngle(-x * angleToRadians(45));
+            orbitControlsRef.current.setPolarAngle((y + 1) * angleToRadians(90 - 30));
+            orbitControlsRef.current.update();
+        };
+    });
+
+    useEffect(() => {
+        if(!!orbitControlsRef.current) {
+            console.log(orbitControlsRef.current);
+        };
+    }, [orbitControlsRef.current]);
+
   return (
     <>
     <Sky/>
     <PerspectiveCamera makeDefault position={[0, 1, 5]}/>
-    
+    <OrbitControls ref={orbitControlsRef} minPolarAngle={angleToRadians(60)} maxPolarAngle={angleToRadians(80)}/>
+
     <mesh position={[0, .5, 0]}>
         <sphereGeometry args={[0.5, 32, 32]}/>
         <meshStandardMaterial color="#ffffff"/>
