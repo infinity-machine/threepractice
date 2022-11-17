@@ -26,16 +26,17 @@ const Three = () => {
     <PerspectiveCamera makeDefault position={[0, 1, 5]}/>
     <OrbitControls ref={orbitControlsRef} minPolarAngle={angleToRadians(60)} maxPolarAngle={angleToRadians(80)}/>
 
-    <mesh position={[0, .5, 0]}>
+    <mesh position={[0, .5, 0]} castShadow>
         <sphereGeometry args={[0.5, 32, 32]}/>
         <meshStandardMaterial color="#ffffff"/>
     </mesh>
 
-    <mesh rotation={[-(angleToRadians(90)), 0, 0]}>
+    <mesh rotation={[-(angleToRadians(90)), 0, 0]} receiveShadow>
         <planeGeometry args={[7, 7]}/>
-        <meshStandardMaterial color="lightgreen"/>
+        <meshPhongMaterial color="lightgreen"/>
     </mesh>
-    <ambientLight args={["#ffffff", 1]}/>
+    <ambientLight args={["#ffffff", 0.25]}/>
+    <spotLight args={["#ffffff", 1.5, 10, angleToRadians(45), 0.4]} position={[-7, 1, 0 ]} castShadow/>
     </>
   )
 }
