@@ -36,7 +36,7 @@ const Three = () => {
         <meshPhongMaterial color="lightgreen"/>
     </mesh>
     <ambientLight args={["#ffffff", 0.25]}/>
-    <spotLight args={["#ffffff", 1.5, 10, angleToRadians(45), 0.4]} position={[-7, 1, 0 ]} castShadow/>
+    <spotLight args={["#ffffff", 1.5, 10, angleToRadians(45), 0.4]} position={[-7, 2, 0 ]} castShadow/>
     </>
   )
 }
