@@ -19,17 +19,18 @@ const Three = () => {
     const ballRef = useRef(null);
     useEffect(() => {
         if (!!ballRef.current) {
+            console.log(ballRef.current)
             const timeline = gsap.timeline({ paused: true });
-            timeline.to(ballRef.current.position, {
-                x: 1,
-                duration: 2,
-                ease: 'power2.out'
-            });
+            // timeline.to(ballRef.current.position, {
+            //     x: 1,
+            //     duration: 2,
+            //     ease: 'power2.out'
+            // });
             timeline.to(ballRef.current.position, {
                 y: 0.5,
-                duration: 1.5,
+                duration: 3,
                 ease: 'bounce.out'
-            }, '<');
+            });
             timeline.play();
         };
     }, [ballRef.current]);
@@ -43,10 +44,10 @@ const Three = () => {
     return (
         <>
             {/* <Sky/> */}
-            <PerspectiveCamera makeDefault position={[0, 1, 5]} />
+            <PerspectiveCamera makeDefault position={[0, 1, 10]} />
             <OrbitControls ref={orbitControlsRef} minPolarAngle={angleToRadians(60)} maxPolarAngle={angleToRadians(80)} />
 
-            <mesh position={[-2, 2.5, 0]} castShadow ref={ballRef}>
+            <mesh position={[0, 10, 0]} castShadow ref={ballRef}>
                 <sphereGeometry args={[0.5, 32, 32]} />
                 <meshStandardMaterial color="#ffffff"/>
             </mesh>
