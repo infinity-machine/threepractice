@@ -9,7 +9,6 @@ const Three = () => {
     useFrame((state) => {
         if (!!orbitControlsRef.current) {
             const { x, y } = state.mouse;
-            // console.log(y * angleToRadians(90 - 30));
             orbitControlsRef.current.setAzimuthalAngle(-x * angleToRadians(45));
             orbitControlsRef.current.setPolarAngle((y + 1) * angleToRadians(90 - 30));
             orbitControlsRef.current.update();
@@ -17,23 +16,23 @@ const Three = () => {
     });
 
     const ballRef = useRef(null);
-    useEffect(() => {
-        if (!!ballRef.current) {
-            console.log(ballRef.current)
-            const timeline = gsap.timeline({ paused: true });
-            // timeline.to(ballRef.current.position, {
-            //     x: 1,
-            //     duration: 2,
-            //     ease: 'power2.out'
-            // });
-            timeline.to(ballRef.current.position, {
-                y: 0.5,
-                duration: 3,
-                ease: 'bounce.out'
-            });
-            timeline.play();
-        };
-    }, [ballRef.current]);
+    // useEffect(() => {
+    //     if (!!ballRef.current) {
+    //         console.log(ballRef.current)
+    //         const timeline = gsap.timeline({ paused: true });
+    //         // timeline.to(ballRef.current.position, {
+    //         //     x: 1,
+    //         //     duration: 2,
+    //         //     ease: 'power2.out'
+    //         // });
+    //         timeline.to(ballRef.current.position, {
+    //             y: 0.5,
+    //             duration: 3,
+    //             ease: 'bounce.out'
+    //         });
+    //         timeline.play();
+    //     };
+    // }, [ballRef.current]);
 
     // useEffect(() => {
     //     if (!!orbitControlsRef.current) {
@@ -41,13 +40,35 @@ const Three = () => {
     //     };
     // }, [orbitControlsRef.current]);
 
+    const handleBounce = () => {
+        if (!!ballRef.current) {
+            const timeline = gsap.timeline({ paused: true });
+            // timeline.to(ballRef.current.position, {
+            //     x: 1,
+            //     duration: 2,
+            //     ease: 'power2.out'
+            // });
+            timeline.to(ballRef.current.position, {
+                y: 5,
+                duration: 1,
+                ease: 'power2.in'
+            });
+            timeline.to(ballRef.current.position, {
+                y: 0.5,
+                duration: 1,
+                ease: 'bounce.out'
+            }, '>')
+            timeline.play();
+        }
+    }
+
     return (
         <>
             {/* <Sky/> */}
             <PerspectiveCamera makeDefault position={[0, 1, 10]} />
             <OrbitControls ref={orbitControlsRef} minPolarAngle={angleToRadians(60)} maxPolarAngle={angleToRadians(80)} />
 
-            <mesh position={[0, 10, 0]} castShadow ref={ballRef}>
+            <mesh position={[0, 0.5, 0]} castShadow ref={ballRef} onClick={handleBounce}>
                 <sphereGeometry args={[0.5, 32, 32]} />
                 <meshStandardMaterial color="#ffffff"/>
             </mesh>
